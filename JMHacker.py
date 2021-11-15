@@ -9,16 +9,16 @@ import shutil
 
 
 # Set the root directory for the Job Market Hacker python file and tex files
-root_dir = 'C:/Users/Daniel/Dropbox/GitHub/jobmarkethacker/'
+root_dir = '/Users/rcampusanog/Dropbox/Respaldo/Trabajo/post-phd-apps/jobmarkethacker/'
 
 #Set the name you want as a prefix to your documents in the application folders
-last_name = 'Mangrum'
+last_name = 'Campusano'
 
 
 # Set the location of your CV and Job Market Paper. These will be copied into 
 # each application folder
-cv_file = '{}/Misc/MangrumCV.pdf'.format(root_dir)
-jmp_file = '{}/Misc/Mangrum_JMP.pdf'.format(root_dir)
+cv_file = '{}/Misc/Campusano_CV.pdf'.format(root_dir)
+jmp_file = '{}/Misc/Campusano_JMP.pdf'.format(root_dir)
 
 
 # Do you want to delete and recreate application folders that already exist?
@@ -33,10 +33,7 @@ delete_existing_folders = 1
 # This is recommended as to create the appropriately sized repeated PDF files
 compile = 1
 
-
-
 ### Begin processing code ###
-
 
 # Create a few directories
 try:
@@ -56,9 +53,6 @@ Jobs_xlsx.Submitted = Jobs_xlsx.Submitted.astype(str)
 Jobs_xlsx.Submitted = Jobs_xlsx.Submitted.replace("nan","")
 Jobs_list = Jobs_xlsx.copy()
 Jobs_xlsx = Jobs_xlsx[~Jobs_xlsx.Complete.isna()]
-
-
-
 
 # Move newly submitted applications into the Submitted folder
 
@@ -93,9 +87,6 @@ Jobs_xlsx = Jobs_xlsx[Jobs_xlsx.Submitted != 'Yes']
 
 # Save job details to a csv to be read by pdflatex
 Jobs_xlsx.to_csv(r'{}/Jobs_export.csv'.format(root_dir),index=False, float_format="%.0f")
-
-
-
 
 
 print('')
@@ -133,14 +124,11 @@ if compile == 1:
         except:
             pass
 
-
-
 # Path for batch pdf of application documents
 RS_path = '{}/Research.pdf'.format(root_dir)
 TS_path = '{}/Teaching.pdf'.format(root_dir)
 DS_path = '{}/Diversity.pdf'.format(root_dir)
 CL_path = '{}/Cover.pdf'.format(root_dir)
-
 
 # Read in each PDF
 CL_pdf = PdfFileReader(CL_path)
@@ -173,9 +161,6 @@ try:
     while 0 in DS_page_end: DS_page_end.remove(0)
 except:
     pass
-
-
-
 
 
 TS_start = 0
@@ -324,7 +309,7 @@ for page in range(0,jobs_n):
 
 
     # Copy Job Market Paper  
-    dst = '{}/Mangrum_JMP.pdf'.format(savepath,name_save)
+    dst = '{}/Campusano_JMP.pdf'.format(savepath,name_save)
     copyfile(jmp_file,dst)
 
     # I've added the ability to copy additional papers/documents to the 
@@ -356,14 +341,6 @@ for page in range(0,jobs_n):
              copyfile(src,dst) 
 
     print('   [{}] Application created!'.format(name))
-
-# Remove batch pdf files
-fileList = glob.glob('{}/*.pdf'.format(root_dir))
-for item in fileList:
-    try:
-        os.remove(item)
-    except:
-        pass
         
 # Remove batch aux files
 fileList = glob.glob('{}/*.aux'.format(root_dir))
